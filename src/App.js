@@ -1,23 +1,25 @@
-import logo from './logo.svg';
 import './App.css';
+import {useEffect, useState} from "react";
+import Content from "./Content";
 
 function App() {
+const [timer, setTimer] = useState(1)
+
+ useEffect(() => {
+     const interval = setInterval(() => {
+         setTimer(timer => timer + 1)
+     }, 1000)
+
+     return () => {
+         clearInterval(interval)
+     }
+ },[timer])
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <div className='timer'>{timer < 60 ? timer : Math.floor(timer/60)}</div>
+        <Content lastSeen={timer} />
     </div>
   );
 }
